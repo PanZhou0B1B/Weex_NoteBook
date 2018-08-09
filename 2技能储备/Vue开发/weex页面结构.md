@@ -2,6 +2,10 @@
 
 ## Weex 页面结构
 
+###### 0. 简单的页面结构：
+
+  ![img](imgs/weex页面结构.png)
+
 ###### 1. 组件component：类似于html
 
 1. [通用事件](https://weex.incubator.apache.org/cn/wiki/common-events.html)：用于组件或者页面Page的一些生命周期的管理。
