@@ -152,6 +152,8 @@
 	> 7. styles:updateStyles:操作styles相关
 	> 8. Display:setNeedsDisplay&displayBlock等
 	> 9. UIView(WXComponent)和CALayer (WXComponent)：关联对应的cpt和ref。
+	> 10. 其它如Layout等功能均以扩展等方式外放到具体文件中。
+	
 2. 其它基于WXComponent的组件：暂略
 3. Recycler：有关循环滚动组件
 
@@ -167,16 +169,20 @@
 	> 2. 针对本地文件添加正确的前缀，并返回
 	
 #### 11. Module：系统定义的通用Module功能模块
-1. 待补充...
+
+1. WXMetaModule：设备尺寸
+2. 待补充...
 
 #### 12. Utility:工具类
-1. 待补充...
+
+1. WXLength：关于设备尺寸转换：支持占比
+2. 待补充...
 
 #### 13. Engine：
 1. WXSDKEngine：
 
 	> 1. registerDefaults:注册默认的Modules、Components、HHandlers
-	> 2. registerModule:withClass:注册Module(native+JS)
+	> 2. registerModule:withClass:注册Module(native+JS)（注册方法时，用了全覆盖的方式，即父类方法均添加进methods）
 	> 3. registerComponent:withClass:注册Cpt(native+JS)
 	> 4. registerService:withScript:withOptions:注册一段script。(以及解除注册方法)
 	> 5.  registerHandler：withProtocol：注册Handlers（K—V：handler-Protocol string）。
@@ -240,7 +246,7 @@
 	> 8. exception:exception回执
 	> 9. resetEnvironment
 	
-5. WXPolyfillSet：JSExport？方便JS直接调用OC的方法和属性？待研究
+5. WXPolyfillSet：JSExport？方便JS直接调用OC的方法和属性？待研究（解决 ios8 以下缓存问题）
 6. JSValue (Weex)：根据NSInvocation和JSContext产生对应的JSValue。
 
 #### 15. Manager：
@@ -249,7 +255,7 @@
 	> 1. registerServiceScript:注册脚本服务器
 	> 2. unregisterServiceScript：取消注册脚本服务器
 
-2. WXInvocationConfig:通过runtime将wx_export_method中公共方法提取出来，映射至同步、异步方法列表中。
+2. WXInvocationConfig:通过runtime 映射将wx_export_method中公共方法提取出来，映射至同步、异步方法列表中。
 
 	> 1. 属性：name、clazz名称类名，同步异步方法列表、初始化方法，注册方法。
 	
@@ -288,7 +294,7 @@
 	> 3. cpt线程获取、开启cpts任务、获取rootview的frame更改
 	> 4. cpts root创建、删除cpt，移动获取等
 	> 5. 更新cpt的style、attrobutes、事件添加移除等
-	> 6. create、refresh、update等周期事件
+	> 6. create、refresh、update等周期事件（CADisplayLink刷新机制运用）
 
 9. WXComponentFactory：管理cpts，如注册、管理等
 
@@ -335,6 +341,12 @@
 ---
 1. WXJSCoreBridge：JSCore的直接操作者，实际上只要实现WXBridgeProtocol协议即可。目前包括WXJSCoreBridge和WXDebugLoggerBridge两类。并且两者由WXBridgeContext负责调配。
 2. WXSDKEngine
+
+---
+
+1. WXBridgeMgr(js thread通道) ->  WXBridgeContext -> JSCoreBridge(协议制约)+ WXDebugLoggerBridge
+2. XXFactory -> configs -> XX(modules etc.)+methods
+3. WXSDKManager -> WXSDKInstance -> cptMgr+rootView
 
 
 ---

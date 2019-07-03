@@ -10,7 +10,7 @@
 	
 ###### 2. 事件回调：
 
-1. 多用于module回调结果 -> JS。
+1. 多用于module回调结果（也可用于component） -> JS。
 
 	> * 类型一：WXModuleCallback回调通知js一次，便释放。用于一次结果场景。
 	> * 类型二：WXModuleKeepAliveCallback回调js n次。可以设置是否多次回调。
